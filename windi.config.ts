@@ -80,6 +80,7 @@ export default defineConfig({
       },
       white: 'hsla(0, 0%, 100%, 1)',
       black: 'hsla(0, 0%, 0%, 1)',
+      transparent: 'transparent',
       // dark mode not listed here yet, will it later on https://www.figma.com/file/fo2cq0m7EcsFfjngXk8m8g/TopCoat-Design-System-v1.0?node-id=36%3A535
     },
     fontFamily: {

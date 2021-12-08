@@ -13,16 +13,11 @@ export default {
 </script>
 
 <template>
-  This emoji will react when hovered >>
-  <div class="i-twemoji-grinning-face-with-smiling-eyes hover:i-twemoji-face-with-tears-of-joy" />
-
-  <br />
-  Firefox emoji: <span class="text-sm i-fxemoji-chicken"></span>
-  <p>here is an env variable: {{ envVariable }}</p>
-  <img :src="vueLogo" />
-
-  <app-button color="ghost" is-disabled>
-    <!-- <template #left-icon><div class="i-mdi:chevron-right"></div></template> -->
-    <template #right-icon><div class="i-mdi:bell"></div></template>
-  </app-button>
+  <div>
+    <!-- Note: need to make a library like page for all components -->
+    <h1>Search Filters</h1>
+    <search-filter outlined rounded label="Outlined & Animated Label"></search-filter>
+    <search-filter disableLabelAnimation label="Flat & Fixed Label with Error" error></search-filter>
+    <search-filter label="Flat & Animated Label"></search-filter>
+  </div>
 </template>
