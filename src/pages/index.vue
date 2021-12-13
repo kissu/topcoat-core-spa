@@ -1,7 +1,3 @@
-<script setup>
-import vueLogo from '~/assets/images/vue_logo.png'
-</script>
-
 <script>
 export default {
   data() {
@@ -16,8 +12,9 @@ export default {
   <div>
     <!-- Note: need to make a library like page for all components -->
     <h1>Search Filters</h1>
-    <search-filter outlined rounded label="Outlined & Animated Label"></search-filter>
-    <search-filter disableLabelAnimation label="Flat & Fixed Label with Error" error></search-filter>
-    <search-filter label="Flat & Animated Label"></search-filter>
+    <search-filter outlined rounded clearIcon label="Outlined, Clear Icon & Animated Label"></search-filter>
+    <search-filter error outlined rounded label="Outlined, Animated Label & Error"></search-filter>
+    <search-filter outlined rounded label="Outlined & Fixed Label" fixedLabel></search-filter>
+    <search-filter label="No Outline"></search-filter>
   </div>
 </template>
