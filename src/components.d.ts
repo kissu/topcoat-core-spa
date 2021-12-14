@@ -8,9 +8,9 @@ declare module 'vue' {
     BaseButton: typeof import('./components/BaseButton.vue')['default']
     CarbonMoon: typeof import('~icons/carbon/moon')['default']
     CarbonSun: typeof import('~icons/carbon/sun')['default']
+    FilterSearch: typeof import('./components/FilterSearch.vue')['default']
     MyFooter: typeof import('./components/MyFooter.vue')['default']
     MyTest: typeof import('./components/nested/MyTest.vue')['default']
-    SearchFilter: typeof import('./components/filters/SearchFilter.vue')['default']
     TheFooter: typeof import('./components/TheFooter.vue')['default']
   }
 }

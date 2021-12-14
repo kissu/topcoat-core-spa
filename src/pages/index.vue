@@ -11,10 +11,20 @@ export default {
 <template>
   <div>
     <!-- Note: need to make a library like page for all components -->
-    <h1>Search Filters</h1>
-    <search-filter outlined rounded clearIcon label="Outlined, Clear Icon & Animated Label"></search-filter>
-    <search-filter error outlined rounded label="Outlined, Animated Label & Error"></search-filter>
-    <search-filter outlined rounded label="Outlined & Fixed Label" fixedLabel></search-filter>
-    <search-filter label="No Outline"></search-filter>
+    <h1 class="pb-6">Search Filters</h1>
+    <div class="grid grid-cols-3 gap-2">
+      <filter-search is-outlined rounded label="Outlined, Rounded & Loader" is-loading />
+      <filter-search is-outlined rounded label="Outlined, Rounded & Error" is-error />
+      <filter-search
+        is-outlined
+        rounded
+        label="Outlined, Placeholder & Clear Button"
+        is-clearable
+        placeholder="Search"
+      />
+      <filter-search is-disabled label="No Outline, Disabled" />
+      <filter-search is-disabled is-outlined label="Outlined, Flat & Disabled" />
+      <filter-search label="Default" />
+    </div>
   </div>
 </template>
