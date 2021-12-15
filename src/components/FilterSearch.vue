@@ -14,13 +14,21 @@ export default {
     },
     rounded: {
       type: [Boolean, String],
-      default: false,
-      validator: (v) => [true, false, 'none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl'].includes(v),
+      default: 'none',
+      validator: (v) => [true, 'none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl'].includes(v),
     },
-    type: {
+    borderWidth: {
       type: String,
-      default: 'text',
-      validator: (v) => ['text', 'number'].includes(v),
+      default: '2',
+    },
+    borderStyle: {
+      type: String,
+      default: 'solid',
+      validator: (v) => ['solid', 'dashed', 'dotted', 'double'].includes(v),
+    },
+    backgroundColor: {
+      type: String,
+      default: 'white',
     },
     isClearable: {
       type: Boolean,
@@ -78,10 +86,14 @@ export default {
         focused: 'border-primary-400',
         error: 'border-error-400 placeholder:text-error-400',
       },
-      roundedTypes: {
+      borderStyles: {
+        solid: 'border-solid',
+        dashed: 'border-dashed',
+        dotted: 'border-dotted',
+        double: 'border-double',
+      },
+      borderRadius: {
         true: 'rounded',
-        false: '',
-        none: 'rounded-none',
         sm: 'rounded-sm',
         md: 'rounded-md',
         lg: 'rounded-lg',
@@ -92,11 +104,11 @@ export default {
       position: {
         label: {
           primary: 'translate-y-5 sm:translate-y-4',
-          focused: 'text-xs -top-2',
+          focused: 'text-xs -translate-y-1',
         },
       },
       attributes: {
-        disabled: 'opacity-60 cursor-not-allowed',
+        disabled: 'cursor-not-allowed',
       },
       icons: {
         spinner: 'i-mdi:loading animate-spin',
@@ -121,43 +133,59 @@ export default {
         absolute
         transform
         transition-colors transition-transform
-        rounded-3xl
         text-xs
         sm:text-base
         whitespace-nowrap
-        overflow-hidden
         text-ellipsis
-        w-10/12
+        px-1
+        mx-3
+        h-2
       "
       :class="[
         {
+          // Apply colors
           [color.label.error]: isError,
           [color.label.focused]: !isError && isFocused,
           [color.label.primary]: !isError && !isFocused,
+
+          // Change cursor
           [attributes.disabled]: isDisabled,
         },
         position.label[isFocused || placeholder ? 'focused' : 'primary'],
+        `bg-${backgroundColor}`, // Background color
       ]"
       :for="componentId"
       ref="label"
     >
-      <div class="w-max backdrop-filter backdrop-blur-3xl truncate px-1 mx-3">{{ label }}</div>
+      <!-- Label goes to top if input is focues or placeholder is added -->
+      <div
+        :class="{ 'sm:-translate-y-1.5 -translate-y-0.5': isFocused || placeholder }"
+        class="w-max truncate transform"
+      >
+        {{ label }}
+      </div>
     </label>
 
     <!-- Input -->
     <input
-      :type="type"
-      class="border-b px-3 h-14 w-full outline-none font-sans pr-8 bg-transparent"
+      class="px-3.5 h-14 w-full outline-none font-sans pr-8"
       :class="[
         {
-          border: isOutlined,
+          // Apply colors
           [border.error]: isError,
           [border.focused]: !isError && isFocused,
           [border.primary]: !isError && !isFocused,
+          'border-b': !isOutlined,
+          border: isOutlined,
+
+          // Change cursor
           [attributes.disabled]: isDisabled,
         },
-        color.input[isError ? 'error' : 'primary'],
-        roundedTypes[rounded],
+        borderStyles[borderStyle],
+        isError ? color.input.error : color.input.primary,
+        borderRadius[rounded], // Apply border radius class
+        isOutlined ? `border-${borderWidth}` : `border-b-${borderWidth}`,
+        `bg-${backgroundColor}`, // Background color
       ]"
       :id="componentId"
       @focus="isFocused = true"
@@ -172,8 +200,8 @@ export default {
       v-if="(value && isClearable) || isLoading"
       class="absolute px-5 right-0 top-0 bottom-0 m-auto cursor-pointer"
       :class="[
-        color.icon.error[isError ? 'error' : 'primary'],
-        icons[isLoading ? 'spinner' : 'close'],
+        isError ? color.icon.error : color.icon.primary,
+        isLoading ? icons.spinner : icons.close,
         // Spinner also includes animation
       ]"
       @click="clearInput"
