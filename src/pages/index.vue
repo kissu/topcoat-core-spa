@@ -1,13 +1,3 @@
-<script>
-export default {
-  data() {
-    return {
-      envVariable: import.meta.env.VITE_TEST,
-    }
-  },
-}
-</script>
-
 <template>
   <div>
     <!-- Note: need to make a library like page for all components -->
