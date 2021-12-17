@@ -1,3 +1,78 @@
+<template>
+  <div class="py-3 overflow-hidden h-max w-full truncate whitespace-nowrap">
+    <div
+      class="relative flex items-center pb-0.5 w-full"
+      :class="[
+        {
+          'cursor-not-allowed': isTrue(isDisabled),
+          'border-error-400 placeholder-error-400': isTrue(isError),
+          'border-primary-400': !isTrue(isError) && isFocused,
+          'border-neutral-400': !isTrue(isError) && !isFocused,
+          [borderWidthSizes[borderWidth]]: borderWidth && isTrue(isOutlined),
+          [colors[innerBgColor]]: isTrue(isOutlined),
+          [borderRadius[rounded]]: isTrue(isOutlined),
+        },
+        isTrue(isOutlined) ? 'border' : 'border-b',
+        borders[borderStyle],
+      ]"
+    >
+      <!-- Label -->
+      <div class="flex flex-col justify-center w-full">
+        <div
+          class="text-left w-max transition-colors"
+          :class="{ 'text-error-400': isTrue(isError), 'pt-3': insideLabel }"
+        >
+          <!-- Inside Label -->
+          <label :for="inputId" class="pb-1 px-1 ml-4.5 text-sm top-0" v-if="insideLabel">
+            {{ label }}
+          </label>
+
+          <!-- Top Label -->
+          <label
+            v-else
+            class="transform transition-transform absolute px-1 ml-4.5"
+            :for="inputId"
+            :class="[
+              // Translate label according to border-width.
+              topLabel ? borderLabelPosition[borderWidth] : 'translate-y-4 h-max',
+              { [colors[innerBgColor]]: isTrue(isOutlined) },
+            ]"
+          >
+            <div :class="{ 'relative bottom-1.5': topLabel }" class="relative">
+              {{ label }}
+            </div>
+          </label>
+        </div>
+
+        <!-- Input -->
+        <input
+          class="h-max outline-none bg-transparent pl-5.5"
+          v-model="value"
+          :id="inputId"
+          :disabled="isTrue(isDisabled)"
+          :placeholder="placeholder"
+          :class="[borderRadius[rounded], insideLabel ? 'py-1 pb-3' : 'py-4']"
+          @focus="isFocused = true"
+          @blur="isFocused = false"
+        />
+      </div>
+
+      <!-- Icon -->
+      <div class="pr-3 pt-2 absolute right-0 top-0 bottom-0 my-auto h-max">
+        <i
+          v-if="(value && isTrue(isClearable)) || isTrue(isLoading)"
+          class="w-max"
+          :class="[
+            isTrue(isLoading) ? 'i-mdi:loading animate-spin' : 'i-mdi:close cursor-pointer',
+            isTrue(isError) ? 'text-error-400' : 'text-neutral-500',
+          ]"
+          @click="clearInput"
+        ></i>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script>
 import { nanoid } from 'nanoid'
 
@@ -133,78 +208,3 @@ export default {
   },
 }
 </script>
-
-<template>
-  <div class="py-3 overflow-hidden h-max w-full truncate whitespace-nowrap">
-    <div
-      class="relative flex items-center pb-0.5 w-full"
-      :class="[
-        {
-          'cursor-not-allowed': isTrue(isDisabled),
-          'border-error-400 placeholder-error-400': isTrue(isError),
-          'border-primary-400': !isTrue(isError) && isFocused,
-          'border-neutral-400': !isTrue(isError) && !isFocused,
-          [borderWidthSizes[borderWidth]]: borderWidth && isTrue(isOutlined),
-          [colors[innerBgColor]]: isTrue(isOutlined),
-          [borderRadius[rounded]]: isTrue(isOutlined),
-        },
-        isTrue(isOutlined) ? 'border' : 'border-b',
-        borders[borderStyle],
-      ]"
-    >
-      <!-- Label -->
-      <div class="flex flex-col justify-center w-full">
-        <div
-          class="text-left w-max transition-colors"
-          :class="{ 'text-error-400': isTrue(isError), 'pt-3': insideLabel }"
-        >
-          <!-- Inside Label -->
-          <label :for="inputId" class="pb-1 px-1 ml-4.5 text-sm top-0" v-if="insideLabel">
-            {{ label }}
-          </label>
-
-          <!-- Top Label -->
-          <label
-            v-else
-            class="transform transition-transform absolute px-1 ml-4.5"
-            :for="inputId"
-            :class="[
-              // Translate label according to border-width.
-              topLabel ? borderLabelPosition[borderWidth] : 'translate-y-4 h-max',
-              { [colors[innerBgColor]]: isTrue(isOutlined) },
-            ]"
-          >
-            <div :class="{ 'relative bottom-1.5': topLabel }" class="relative">
-              {{ label }}
-            </div>
-          </label>
-        </div>
-
-        <!-- Input -->
-        <input
-          class="h-max outline-none bg-transparent pl-5.5"
-          v-model="value"
-          :id="inputId"
-          :disabled="isTrue(isDisabled)"
-          :placeholder="placeholder"
-          :class="[borderRadius[rounded], insideLabel ? 'py-1 pb-3' : 'py-4']"
-          @focus="isFocused = true"
-          @blur="isFocused = false"
-        />
-      </div>
-
-      <!-- Icon -->
-      <div class="pr-3 pt-2 absolute right-0 top-0 bottom-0 my-auto h-max">
-        <i
-          v-if="(value && isTrue(isClearable)) || isTrue(isLoading)"
-          class="w-max"
-          :class="[
-            isTrue(isLoading) ? 'i-mdi:loading animate-spin' : 'i-mdi:close cursor-pointer',
-            isTrue(isError) ? 'text-error-400' : 'text-neutral-500',
-          ]"
-          @click="clearInput"
-        ></i>
-      </div>
-    </div>
-  </div>
-</template>
