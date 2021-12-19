@@ -109,8 +109,8 @@ export default {
     },
     borderWidth: {
       type: [String, Number],
-      default: 1,
-      validator: (v) => [0, 2, 4, 8].includes(v),
+      default: 2,
+      validator: (v) => [0, 2, 4, 8].includes(Number(v)),
     },
     isClearable: {
       type: [Boolean, String],
