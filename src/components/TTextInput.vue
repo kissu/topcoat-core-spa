@@ -4,9 +4,8 @@
       class="relative flex items-center pb-0.5 w-full"
       :class="[
         styles.borders[borderStyle],
-        isTrue(isOutlined) && styles.colors[innerBgColor],
-        isTrue(isOutlined) && styles.borderRadius[rounded],
-        borderWidth && isTrue(isOutlined) && styles.borderWidthSizes[borderWidth],
+        isTrue(isOutlined) && [styles.colors[innerBgColor], styles.borderRadius[isRounded]],
+        isTrue(isOutlined) && borderWidth && styles.borderWidthSizes[borderWidth],
         isTrue(isDisabled) && 'cursor-not-allowed',
         isTrue(isError) && 'border-error-400 placeholder-error-400',
         !isTrue(isError) && isFocused && 'border-primary-400',
@@ -47,7 +46,7 @@
           :id="inputUuid"
           :disabled="isTrue(isDisabled)"
           :placeholder="placeholder"
-          :class="[styles.borderRadius[isRounded], insideLabel ? 'py-1 pb-3' : 'py-4']"
+          :class="[styles.borderRadius[isRounded], insideLabel ? 'pt-1 pb-3' : 'py-4']"
           @focus="isFocused = true"
           @blur="isFocused = false"
         />

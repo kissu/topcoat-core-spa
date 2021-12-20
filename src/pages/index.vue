@@ -6,12 +6,12 @@
       <t-text-input label="Default" />
       <t-text-input label="Default Outlined & Loading" is-outlined is-loading />
       <t-text-input label="Outlined & Clearable" is-outlined is-clearable="true" />
-      <t-text-input label="Label" placeholder="Placeholder & Rounded 3xl" rounded="3xl" is-outlined />
+      <t-text-input label="Label" placeholder="Placeholder & Rounded 3xl" is-rounded="3xl" is-outlined />
       <t-text-input
         label="Label"
         placeholder="Inside Label & dark color"
         label-location="inside"
-        rounded="3xl"
+        is-rounded="3xl"
         inner-bg-color="dark"
         is-outlined
       />
@@ -19,7 +19,7 @@
         label="Label"
         placeholder="Border width is 4"
         border-width="4"
-        rounded="3xl"
+        is-rounded="3xl"
         is-outlined
       />
     </div>
