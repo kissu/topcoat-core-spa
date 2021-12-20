@@ -1,69 +1,67 @@
 <template>
-  <div class="w-full py-3 overflow-hidden truncate h-max whitespace-nowrap">
-    <div
-      class="relative flex items-center pb-0.5 w-full"
-      :class="[
-        styles.borders[borderStyle],
-        isTrue(isOutlined) && [styles.colors[innerBgColor], styles.borderRadius[isRounded]],
-        isTrue(isOutlined) && borderWidth && styles.borderWidthSizes[borderWidth],
-        isTrue(isDisabled) && 'cursor-not-allowed',
-        isTrue(isError) && 'border-error-400 placeholder-error-400',
-        !isTrue(isError) && isFocused && 'border-primary-400',
-        !isTrue(isError) && !isFocused && 'border-neutral-400',
-        isTrue(isOutlined) ? 'border' : 'border-b',
-      ]"
-    >
-      <!-- Label -->
-      <div class="flex flex-col justify-center w-full">
-        <div
-          class="text-left transition-colors w-max"
-          :class="[insideLabel && 'pt-3', isTrue(isError) && 'text-error-400']"
-        >
-          <!-- Inside Label -->
-          <label :for="inputUuid" class="pb-1 px-1 ml-4.5 text-sm top-0 opacity-80" v-if="insideLabel">
-            {{ label }}
-          </label>
+  <div
+    class="w-full h-max whitespace-nowrap relative flex items-center pb-0.5 w-full"
+    :class="[
+      styles.borders[borderStyle],
+      isTrue(isOutlined) && [styles.colors[innerBgColor], styles.borderRadius[isRounded]],
+      isTrue(isOutlined) && borderWidth && styles.borderWidthSizes[borderWidth],
+      isTrue(isDisabled) && 'cursor-not-allowed',
+      isTrue(isError) && 'border-error-400 placeholder-error-400',
+      !isTrue(isError) && isFocused && 'border-primary-400',
+      !isTrue(isError) && !isFocused && 'border-neutral-400',
+      isTrue(isOutlined) ? 'border' : 'border-b',
+    ]"
+  >
+    <!-- Label -->
+    <div class="flex flex-col justify-center w-full">
+      <div
+        class="text-left transition-colors w-max"
+        :class="[insideLabel && 'pt-3', isTrue(isError) && 'text-error-400']"
+      >
+        <!-- Inside Label -->
+        <label :for="inputUuid" class="pb-1 px-1 ml-4.5 text-sm top-0 opacity-80" v-if="insideLabel">
+          {{ label }}
+        </label>
 
-          <!-- Top Label -->
-          <label
-            v-else
-            class="transform transition-transform absolute px-1 ml-4.5"
-            :for="inputUuid"
-            :class="[
-              // Translate label according to border-width.
-              isTrue(isOutlined) && styles.colors[innerBgColor],
-              topLabel ? styles.borderLabelPosition[borderWidth] : 'translate-y-4 h-max',
-            ]"
-          >
-            <div :class="[topLabel && 'relative bottom-1.5']" class="relative">{{ label }}</div>
-          </label>
-        </div>
-
-        <!-- Input -->
-        <input
-          class="h-max outline-none bg-transparent pl-5.5"
-          v-model="value"
-          :id="inputUuid"
-          :disabled="isTrue(isDisabled)"
-          :placeholder="placeholder"
-          :class="[styles.borderRadius[isRounded], insideLabel ? 'pt-1 pb-3' : 'py-4']"
-          @focus="isFocused = true"
-          @blur="isFocused = false"
-        />
-      </div>
-
-      <!-- Icon -->
-      <div class="absolute top-0 bottom-0 right-0 pt-2 pr-3 my-auto h-max">
-        <i
-          v-if="(value && isTrue(isClearable)) || isTrue(isLoading)"
-          class="w-max"
+        <!-- Top Label -->
+        <label
+          v-else
+          class="transform transition-transform absolute px-1 ml-4.5"
+          :for="inputUuid"
           :class="[
-            isTrue(isLoading) ? 'i-mdi:loading animate-spin' : 'i-mdi:close cursor-pointer',
-            isTrue(isError) ? 'text-error-400' : 'text-neutral-500',
+            // Translate label according to border-width.
+            isTrue(isOutlined) && styles.colors[innerBgColor],
+            topLabel ? styles.borderLabelPosition[borderWidth] : 'translate-y-4 h-max',
           ]"
-          @click="clearInput"
-        ></i>
+        >
+          <div :class="[topLabel && 'relative bottom-1.5']" class="relative">{{ label }}</div>
+        </label>
       </div>
+
+      <!-- Input -->
+      <input
+        class="h-max outline-none bg-transparent pl-5.5"
+        v-model="value"
+        :id="inputUuid"
+        :disabled="isTrue(isDisabled)"
+        :placeholder="placeholder"
+        :class="[styles.borderRadius[isRounded], insideLabel ? 'pt-1 pb-3' : 'py-4']"
+        @focus="isFocused = true"
+        @blur="isFocused = false"
+      />
+    </div>
+
+    <!-- Icon -->
+    <div class="absolute top-0 bottom-0 right-0 pt-2 pr-3 my-auto h-max">
+      <i
+        v-if="(value && isTrue(isClearable)) || isTrue(isLoading)"
+        class="w-max"
+        :class="[
+          isTrue(isLoading) ? 'i-mdi:loading animate-spin' : 'i-mdi:close cursor-pointer',
+          isTrue(isError) ? 'text-error-400' : 'text-neutral-500',
+        ]"
+        @click="clearInput"
+      ></i>
     </div>
   </div>
 </template>
