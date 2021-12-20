@@ -111,32 +111,32 @@ export default {
     isClearable: {
       type: [Boolean, String],
       default: false,
-      validator: (v) => [true, false, 'true', 'false'].includes(v),
+      validator: (v) => ['true', 'false'].includes(String(v)),
     },
     isDisabled: {
       type: [Boolean, String],
       default: false,
-      validator: (v) => [true, false, 'true', 'false'].includes(v),
+      validator: (v) => ['true', 'false'].includes(String(v)),
     },
     isError: {
       type: [Boolean, String],
       default: false,
-      validator: (v) => [true, false, 'true', 'false'].includes(v),
+      validator: (v) => ['true', 'false'].includes(String(v)),
     },
     isLoading: {
       type: [Boolean, String],
       default: false,
-      validator: (v) => [true, false, 'true', 'false'].includes(v),
+      validator: (v) => ['true', 'false'].includes(String(v)),
     },
     isOutlined: {
       type: [Boolean, String],
       default: false,
-      validator: (v) => [true, false, 'true', 'false'].includes(v),
+      validator: (v) => ['true', 'false'].includes(String(v)),
     },
     isRounded: {
       type: [Boolean, String],
       default: 'none',
-      validator: (v) => [true, 'none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl'].includes(v),
+      validator: (v) => ['true', 'none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl'].includes(String(v)),
     },
   },
   computed: {
