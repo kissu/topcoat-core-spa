@@ -3,27 +3,25 @@
     <div
       class="relative flex items-center pb-0.5 w-full"
       :class="[
-        {
-          'cursor-not-allowed': isTrue(isDisabled),
-          'border-error-400 placeholder-error-400': isTrue(isError),
-          'border-primary-400': !isTrue(isError) && isFocused,
-          'border-neutral-400': !isTrue(isError) && !isFocused,
-          [styles.borderWidthSizes[borderWidth]]: borderWidth && isTrue(isOutlined),
-          [styles.colors[innerBgColor]]: isTrue(isOutlined),
-          [styles.borderRadius[rounded]]: isTrue(isOutlined),
-        },
-        isTrue(isOutlined) ? 'border' : 'border-b',
         styles.borders[borderStyle],
+        isTrue(isOutlined) && styles.colors[innerBgColor],
+        isTrue(isOutlined) && styles.borderRadius[rounded],
+        borderWidth && isTrue(isOutlined) && styles.borderWidthSizes[borderWidth],
+        isTrue(isDisabled) && 'cursor-not-allowed',
+        isTrue(isError) && 'border-error-400 placeholder-error-400',
+        !isTrue(isError) && isFocused && 'border-primary-400',
+        !isTrue(isError) && !isFocused && 'border-neutral-400',
+        isTrue(isOutlined) ? 'border' : 'border-b',
       ]"
     >
       <!-- Label -->
       <div class="flex flex-col justify-center w-full">
         <div
           class="text-left transition-colors w-max"
-          :class="{ 'text-error-400': isTrue(isError), 'pt-3': insideLabel }"
+          :class="[insideLabel && 'pt-3', isTrue(isError) && 'text-error-400']"
         >
           <!-- Inside Label -->
-          <label :for="inputId" class="pb-1 px-1 ml-4.5 text-sm top-0 opacity-80" v-if="insideLabel">
+          <label :for="inputUuid" class="pb-1 px-1 ml-4.5 text-sm top-0 opacity-80" v-if="insideLabel">
             {{ label }}
           </label>
 
@@ -31,16 +29,14 @@
           <label
             v-else
             class="transform transition-transform absolute px-1 ml-4.5"
-            :for="inputId"
+            :for="inputUuid"
             :class="[
               // Translate label according to border-width.
+              isTrue(isOutlined) && styles.colors[innerBgColor],
               topLabel ? styles.borderLabelPosition[borderWidth] : 'translate-y-4 h-max',
-              { [styles.colors[innerBgColor]]: isTrue(isOutlined) },
             ]"
           >
-            <div :class="{ 'relative bottom-1.5': topLabel }" class="relative">
-              {{ label }}
-            </div>
+            <div :class="[topLabel && 'relative bottom-1.5']" class="relative">{{ label }}</div>
           </label>
         </div>
 
@@ -48,10 +44,10 @@
         <input
           class="h-max outline-none bg-transparent pl-5.5"
           v-model="value"
-          :id="inputId"
+          :id="inputUuid"
           :disabled="isTrue(isDisabled)"
           :placeholder="placeholder"
-          :class="[styles.borderRadius[rounded], insideLabel ? 'py-1 pb-3' : 'py-4']"
+          :class="[styles.borderRadius[isRounded], insideLabel ? 'py-1 pb-3' : 'py-4']"
           @focus="isFocused = true"
           @blur="isFocused = false"
         />
@@ -77,21 +73,9 @@
 import { nanoid } from 'nanoid'
 
 export default {
-  name: 'TextInput',
+  name: 't-text-input',
   props: {
-    label: {
-      type: String,
-      default: '',
-    },
-    placeholder: {
-      type: String,
-      default: '',
-    },
-    rounded: {
-      type: [Boolean, String],
-      default: 'none',
-      validator: (v) => [true, 'none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl'].includes(v),
-    },
+    //* Strings
     borderStyle: {
       type: String,
       default: 'solid',
@@ -102,27 +86,29 @@ export default {
       default: 'light',
       validator: (v) => ['primary', 'secondary', 'light', 'dark'].includes(v),
     },
+    label: {
+      type: String,
+      default: '',
+    },
     labelLocation: {
       type: String,
       default: 'top',
       validator: (v) => ['top', 'inside'].includes(v),
     },
+    placeholder: {
+      type: String,
+      default: '',
+    },
+
+    //* Mixed types
     borderWidth: {
       type: [String, Number],
       default: 2,
       validator: (v) => [0, 2, 4, 8].includes(Number(v)),
     },
+
+    //* String-leans
     isClearable: {
-      type: [Boolean, String],
-      default: false,
-      validator: (v) => [true, false, 'true', 'false'].includes(v),
-    },
-    isLoading: {
-      type: [Boolean, String],
-      default: false,
-      validator: (v) => [true, false, 'true', 'false'].includes(v),
-    },
-    isOutlined: {
       type: [Boolean, String],
       default: false,
       validator: (v) => [true, false, 'true', 'false'].includes(v),
@@ -137,26 +123,40 @@ export default {
       default: false,
       validator: (v) => [true, false, 'true', 'false'].includes(v),
     },
+    isLoading: {
+      type: [Boolean, String],
+      default: false,
+      validator: (v) => [true, false, 'true', 'false'].includes(v),
+    },
+    isOutlined: {
+      type: [Boolean, String],
+      default: false,
+      validator: (v) => [true, false, 'true', 'false'].includes(v),
+    },
+    isRounded: {
+      type: [Boolean, String],
+      default: 'none',
+      validator: (v) => [true, 'none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl'].includes(v),
+    },
   },
   computed: {
     // Unique id for input.
-    inputId() {
+    inputUuid() {
       return nanoid()
     },
-    topLabel({ isFocused, placeholder, value, labelLocation }) {
+    topLabel() {
       // Border label that animates to top if any of these condition are true.
       // Unlike `inside label` top label is only active when input focus or input has value.
-      return (isFocused || placeholder || value) && labelLocation == 'top'
+      return (this.isFocused || this.placeholder || this.value) && this.labelLocation === 'top'
     },
-    insideLabel({ labelLocation }) {
+    insideLabel() {
       // Label stays fixed inside the parent container.
-      return labelLocation == 'inside'
+      return this.labelLocation === 'inside'
     },
   },
   data() {
     return {
       isFocused: false, // true if input has value or typing cursor
-      value: '',
       styles: {
         borders: {
           solid: 'border-solid',
@@ -193,6 +193,7 @@ export default {
           dark: 'bg-neutral-900 text-neutral-50',
         },
       },
+      value: '',
     }
   },
   methods: {
