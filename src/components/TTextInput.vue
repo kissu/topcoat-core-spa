@@ -5,7 +5,7 @@
       styles.borders[borderStyle],
       isTrue(isOutlined) && [styles.colors[innerBgColor], styles.borderRadius[isRounded]],
       isTrue(isOutlined) && borderWidth && styles.borderWidthSizes[borderWidth],
-      isTrue(isDisabled) && 'cursor-not-allowed',
+      isTrue(isDisabled) && 'opacity-30',
       isTrue(isError) && 'border-error-400 placeholder-error-400',
       !isTrue(isError) && isFocused && 'border-primary-400',
       !isTrue(isError) && !isFocused && 'border-neutral-400',

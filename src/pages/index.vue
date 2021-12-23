@@ -14,6 +14,7 @@
         is-rounded="3xl"
         inner-bg-color="dark"
         is-outlined
+        is-disabled="true"
       />
       <t-text-input
         label="Label"
