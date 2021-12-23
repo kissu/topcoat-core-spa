@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full h-max whitespace-nowrap relative flex items-center pb-0.5 w-full"
+    class="w-full h-max relative flex items-center pb-0.5 w-full"
     :class="[
       styles.borders[borderStyle],
       isTrue(isOutlined) && [styles.colors[innerBgColor], styles.borderRadius[isRounded]],
@@ -150,6 +150,15 @@ export default {
       // Label stays fixed inside the parent container.
       return this.labelLocation === 'inside'
     },
+    urlParam: {
+      get() {
+        return this.text_internal
+      },
+      set(value) {
+        this.text_internal = value
+        this.setFilterValue('query', this.text_internal, true)
+      },
+    },
   },
   data() {
     return {
@@ -204,6 +213,24 @@ export default {
         return value == 'true'
       }
       return value
+    },
+    onVisualizationInit() {
+      const initial_value = this.getFilterValue('query')
+
+      if (initial_value) {
+        this.text_internal = initial_value
+      } else if (this.config.default_value) {
+        this.text_internal = this.config.default_value
+      } else {
+        return
+      }
+      this.value = this.text_internal
+      this.setFilterValue('query', this.text_internal, true)
+    },
+    onEnter(e) {
+      if (e.keyCode === 13) {
+        this.urlParam = this.value
+      }
     },
   },
 }
