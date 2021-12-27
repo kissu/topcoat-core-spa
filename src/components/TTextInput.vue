@@ -171,7 +171,7 @@ export default {
           double: 'border-double',
         },
         borderRadius: {
-          none: 'rouned-none',
+          none: 'rounded-none',
           true: 'rounded',
           sm: 'rounded-sm',
           md: 'rounded-md',
