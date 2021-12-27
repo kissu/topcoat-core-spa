@@ -5,7 +5,7 @@
       styles.borders[borderStyle],
       isTrue(isOutlined) && [styles.colors[innerBgColor], styles.borderRadius[isRounded]],
       isTrue(isOutlined) && borderWidth && styles.borderWidthSizes[borderWidth],
-      isTrue(isDisabled) && 'opacity-30',
+      isTrue(isDisabled) && 'opacity-30 group',
       isTrue(isError) && 'border-error-400 placeholder-error-400',
       !isTrue(isError) && isFocused && 'border-primary-400',
       !isTrue(isError) && !isFocused && 'border-neutral-400',
@@ -13,20 +13,25 @@
     ]"
   >
     <!-- Label -->
+    <!-- Note: For Input and Label, cursor classes only work when directly applied to element -->
     <div class="flex flex-col justify-center w-full">
       <div
         class="text-left transition-colors w-max"
         :class="[insideLabel && 'pt-3', isTrue(isError) && 'text-error-400']"
       >
         <!-- Inside Label -->
-        <label :for="inputUuid" class="pb-1 px-1 ml-4.5 text-sm top-0 opacity-80" v-if="insideLabel">
+        <label
+          :for="inputUuid"
+          class="pb-1 px-1 ml-4.5 text-sm top-0 opacity-80 group-hover:cursor-not-allowed"
+          v-if="insideLabel"
+        >
           {{ label }}
         </label>
 
         <!-- Top Label -->
         <label
           v-else
-          class="transform transition-transform absolute px-1 ml-4.5"
+          class="transform transition-transform absolute px-1 ml-4.5 group-hover:cursor-not-allowed"
           :for="inputUuid"
           :class="[
             // Translate label according to border-width.
@@ -40,7 +45,7 @@
 
       <!-- Input -->
       <input
-        class="h-max outline-none bg-transparent pl-5.5"
+        class="h-max outline-none bg-transparent pl-5.5 group-hover:cursor-not-allowed"
         v-model="value"
         :id="inputUuid"
         :disabled="isTrue(isDisabled)"
@@ -48,6 +53,7 @@
         :class="[styles.borderRadius[isRounded], insideLabel ? 'pt-1 pb-3' : 'py-4']"
         @focus="isFocused = true"
         @blur="isFocused = false"
+        aria-label="text field"
       />
     </div>
 
