@@ -21,9 +21,9 @@
       >
         <!-- Inside Label -->
         <label
+          v-if="insideLabel"
           :for="inputUuid"
           class="pb-1 px-1 ml-4.5 text-sm top-0 opacity-80 group-hover:cursor-not-allowed"
-          v-if="insideLabel"
         >
           {{ label }}
         </label>
@@ -45,15 +45,15 @@
 
       <!-- Input -->
       <input
-        class="h-max outline-none bg-transparent pl-5.5 group-hover:cursor-not-allowed"
-        v-model="value"
         :id="inputUuid"
+        v-model="value"
+        class="h-max outline-none bg-transparent pl-5.5 group-hover:cursor-not-allowed"
         :disabled="isTrue(isDisabled)"
         :placeholder="placeholder"
         :class="[styles.borderRadius[isRounded], insideLabel ? 'pt-1 pb-3' : 'py-4']"
+        aria-label="text field"
         @focus="isFocused = true"
         @blur="isFocused = false"
-        aria-label="text field"
       />
     </div>
 
@@ -76,7 +76,7 @@
 import { nanoid } from 'nanoid'
 
 export default {
-  name: 't-text-input',
+  name: 'TTextInput',
   props: {
     //* Strings
     borderStyle: {
@@ -146,30 +146,6 @@ export default {
       validator: (v) => ['true', 'none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl'].includes(String(v)),
     },
   },
-  computed: {
-    // Unique id for input.
-    inputUuid() {
-      return nanoid()
-    },
-    topLabel() {
-      // Border label that animates to top if any of these condition are true.
-      // Unlike `inside label` top label is only active when input focus or input has value.
-      return (this.isFocused || this.placeholder || this.value) && this.labelLocation === 'top'
-    },
-    insideLabel() {
-      // Label stays fixed inside the parent container.
-      return this.labelLocation === 'inside'
-    },
-    urlParam: {
-      get() {
-        return this.text_internal
-      },
-      set(value) {
-        this.text_internal = value
-        this.setFilterValue('query', this.text_internal, true)
-      },
-    },
-  },
   data() {
     return {
       isFocused: false, // true if input has value or typing cursor
@@ -217,6 +193,30 @@ export default {
       },
       value: '',
     }
+  },
+  computed: {
+    // Unique id for input.
+    inputUuid() {
+      return nanoid()
+    },
+    topLabel() {
+      // Border label that animates to top if any of these condition are true.
+      // Unlike `inside label` top label is only active when input focus or input has value.
+      return (this.isFocused || this.placeholder || this.value) && this.labelLocation === 'top'
+    },
+    insideLabel() {
+      // Label stays fixed inside the parent container.
+      return this.labelLocation === 'inside'
+    },
+    urlParam: {
+      get() {
+        return this.text_internal
+      },
+      set(value) {
+        this.text_internal = value
+        this.setFilterValue('query', this.text_internal, true)
+      },
+    },
   },
   methods: {
     clearInput() {
