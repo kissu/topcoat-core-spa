@@ -7,7 +7,7 @@
       isTrue(isOutlined) && borderWidth && styles.borderWidthSizes[borderWidth],
       isTrue(isDisabled) && 'opacity-30 group',
       isTrue(isError) && 'border-error-400 placeholder-error-400',
-      !isTrue(isError) && isFocused && 'border-primary-400',
+      !isTrue(isError) && isFocused && styles.borderColors[highlightColor],
       !isTrue(isError) && !isFocused && 'border-neutral-400',
       isTrue(isOutlined) ? 'border' : 'border-b',
     ]"
@@ -101,6 +101,10 @@ export default {
     placeholder: {
       type: String,
       default: '',
+    },
+    highlightColor: {
+      type: String,
+      default: 'primary',
     },
 
     //* Mixed types
@@ -197,6 +201,12 @@ export default {
           2: '-translate-y-0.5 text-xs',
           4: '-translate-y-1 text-xs',
           8: '-translate-y-2 text-sm',
+        },
+        borderColors: {
+          primary: 'border-primary-400',
+          secondary: 'border-secondary-400',
+          light: 'border-neutral-50',
+          dark: 'border-neutral-900',
         },
         colors: {
           primary: 'bg-primary-50 text-neutral-900',
