@@ -4,11 +4,13 @@
     :class="[
       styles.borders[borderStyle],
       isTrue(isOutlined) && [styles.colors[innerBgColor], styles.borderRadius[isRounded]],
-      isTrue(isOutlined) && borderWidth && styles.borderWidthSizes[borderWidth],
+      isTrue(isOutlined)
+        ? styles.borderWidthSizes.outline[borderWidth]
+        : styles.borderWidthSizes.underline[borderWidth],
       isTrue(isDisabled) && 'opacity-30 group',
       isTrue(isError) && 'border-error-400 placeholder-error-400',
-      !isTrue(isError) && isFocused && styles.borderColors[highlightColor],
-      !isTrue(isError) && !isFocused && 'border-neutral-400',
+      !isTrue(isError) && isFocused && styles.borderColors[borderHighlightColor],
+      !isTrue(isError) && !isFocused && styles.borderColors[borderColor],
       isTrue(isOutlined) ? 'border' : 'border-b',
     ]"
   >
@@ -80,14 +82,18 @@ export default {
   name: 'TTextInput',
   props: {
     //* Strings
+    borderColor: {
+      type: String,
+      default: 'neutral',
+    },
+    borderHighlightColor: {
+      type: String,
+      default: 'primary',
+    },
     borderStyle: {
       type: String,
       default: 'solid',
       validator: (v) => ['solid', 'dashed', 'dotted', 'double'].includes(v),
-    },
-    highlightColor: {
-      type: String,
-      default: 'primary',
     },
     innerBgColor: {
       type: String,
@@ -162,6 +168,7 @@ export default {
           secondary: 'border-secondary-400',
           light: 'border-neutral-50',
           dark: 'border-neutral-900',
+          neutral: 'border-neutral-400',
         },
         borderLabelPosition: {
           1: '-translate-y-0.5 text-xs',
@@ -180,16 +187,25 @@ export default {
           '3xl': 'rounded-3xl',
         },
         borderWidthSizes: {
-          1: 'border',
-          2: 'border-2',
-          4: 'border-4',
-          8: 'border-8',
+          outline: {
+            1: 'border',
+            2: 'border-2',
+            4: 'border-4',
+            8: 'border-8',
+          },
+          underline: {
+            1: 'border-b',
+            2: 'border-b-2',
+            4: 'border-b-4',
+            8: 'border-b-8',
+          },
         },
         colors: {
           primary: 'bg-primary-50 text-neutral-900',
           secondary: 'bg-secondary-50 text-neutral-900',
           light: 'bg-neutral-50 text-neutral-900',
           dark: 'bg-neutral-900 text-neutral-50',
+          neutral: 'bg-neutral-400 text-neutral-50',
         },
       },
       value: '',
