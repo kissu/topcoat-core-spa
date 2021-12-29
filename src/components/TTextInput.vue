@@ -85,6 +85,10 @@ export default {
       default: 'solid',
       validator: (v) => ['solid', 'dashed', 'dotted', 'double'].includes(v),
     },
+    highlightColor: {
+      type: String,
+      default: 'primary',
+    },
     innerBgColor: {
       type: String,
       default: 'light',
@@ -102,10 +106,6 @@ export default {
     placeholder: {
       type: String,
       default: '',
-    },
-    highlightColor: {
-      type: String,
-      default: 'primary',
     },
 
     //* Mixed types
@@ -157,6 +157,18 @@ export default {
           dotted: 'border-dotted',
           double: 'border-double',
         },
+        borderColors: {
+          primary: 'border-primary-400',
+          secondary: 'border-secondary-400',
+          light: 'border-neutral-50',
+          dark: 'border-neutral-900',
+        },
+        borderLabelPosition: {
+          1: '-translate-y-0.5 text-xs',
+          2: '-translate-y-0.5 text-xs',
+          4: '-translate-y-1 text-xs',
+          8: '-translate-y-2 text-sm',
+        },
         borderRadius: {
           none: 'rounded-none',
           true: 'rounded',
@@ -172,18 +184,6 @@ export default {
           2: 'border-2',
           4: 'border-4',
           8: 'border-8',
-        },
-        borderLabelPosition: {
-          1: '-translate-y-0.5 text-xs',
-          2: '-translate-y-0.5 text-xs',
-          4: '-translate-y-1 text-xs',
-          8: '-translate-y-2 text-sm',
-        },
-        borderColors: {
-          primary: 'border-primary-400',
-          secondary: 'border-secondary-400',
-          light: 'border-neutral-50',
-          dark: 'border-neutral-900',
         },
         colors: {
           primary: 'bg-primary-50 text-neutral-900',
