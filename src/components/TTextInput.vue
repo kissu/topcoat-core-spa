@@ -54,6 +54,7 @@
         aria-label="text field"
         @focus="isFocused = true"
         @blur="isFocused = false"
+        @keyup="onEnter"
       />
     </div>
 
