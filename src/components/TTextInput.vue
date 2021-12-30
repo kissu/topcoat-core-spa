@@ -79,7 +79,8 @@
 import { nanoid } from 'nanoid'
 
 export default {
-  name: 'TTextInput',
+  // eslint-disable-next-line
+  name: 't-text-input',
   props: {
     //* Strings
     borderColor: {
