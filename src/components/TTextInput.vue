@@ -3,15 +3,17 @@
     class="w-full h-max relative flex items-center pb-0.5 w-full"
     :class="[
       styles.borders[borderStyle],
+
       isTrue(isOutlined) && [styles.colors[innerBgColor], styles.borderRadius[isRounded]],
-      isTrue(isOutlined)
-        ? styles.borderWidthSizes.outline[borderWidth]
-        : styles.borderWidthSizes.underline[borderWidth],
       isTrue(isDisabled) && 'opacity-30 group',
       isTrue(isError) && 'border-error-400 placeholder-error-400',
       !isTrue(isError) && isFocused && styles.borderColors[borderHighlightColor],
       !isTrue(isError) && !isFocused && styles.borderColors[borderColor],
+
       isTrue(isOutlined) ? 'border' : 'border-b',
+      isTrue(isOutlined)
+        ? styles.borderWidthSizes.outline[borderWidth]
+        : styles.borderWidthSizes.underline[borderWidth],
     ]"
   >
     <!-- Label -->
