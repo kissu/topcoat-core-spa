@@ -18,3 +18,6 @@ storybook-static
 # may not be useful and cumbersome when moving from branch to branch
 auto-imports.d.ts
 components.d.ts
+
+# used for rollup-plugin-visualizer
+stats.html
