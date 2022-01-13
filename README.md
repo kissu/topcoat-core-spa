@@ -1,6 +1,6 @@
-# Expandable modules 📦
+# Core SPA 🚀
 
-More info can be found on Notion/FE documentation but this repo will mainly help designing components for Viz and also for our homemade components library.
+More info can be found on Notion/FE documentation but this repo will mainly help designing the render functions that will generate all the components from our REST API.
 
 ## How to run
 

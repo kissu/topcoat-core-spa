@@ -1,3 +1,3 @@
 <template>
-  <div>404</div>
+  <div>this should be the default page</div>
 </template>

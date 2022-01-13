@@ -80,23 +80,7 @@ export default defineConfig({
       },
       white: 'hsla(0, 0%, 100%, 1)',
       black: 'hsla(0, 0%, 0%, 1)',
-      transparent: 'transparent',
-      inherit: 'inherit',
-      current: 'currentColor',
       // dark mode not listed here yet, will it later on https://www.figma.com/file/fo2cq0m7EcsFfjngXk8m8g/TopCoat-Design-System-v1.0?node-id=36%3A535
     },
-    fontFamily: {
-      inter: "Inter, sans-serif",
-    },
-    //todo fonts, especially line heights etc... https://youtu.be/cZc4Jn5nK3k?t=273
-    //todo grids
-    dropShadow: {
-      none: '0',
-      xs: '0px 4px 8px hsla(0, 0%, 0%, 0.1)',
-      sm: '0px 6px 12px hsla(0, 0%, 0%, 0.1)',
-      md: '0px 9px 18px hsla(0, 0%, 0%, 0.2)',
-      lg: '0px 13px 37px hsla(0, 0%, 0%, 0.2)',
-      xl: '0px 20px 56px hsla(0, 0%, 0%, 0.3)'
-    }
   }
 })

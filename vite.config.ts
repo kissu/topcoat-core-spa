@@ -1,5 +1,6 @@
 import path from 'path'
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig } from 'vite'
+// import { loadEnv } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 import Pages from 'vite-plugin-pages'
 import Layouts from 'vite-plugin-vue-layouts'
@@ -12,11 +13,11 @@ import { presetUno, presetIcons } from 'unocss'
 import { visualizer } from 'rollup-plugin-visualizer';
 
 //doc https://github.com/vitejs/vite/issues/1930#issuecomment-783747858
-const env = loadEnv(
-  'mode', // mode
-  process.cwd(), // root
-  '' // prefix (defaults to "VITE_")
-)
+// const env = loadEnv(
+//   'mode', // mode
+//   process.cwd(), // root
+//   '' // prefix (defaults to "VITE_")
+// )
 
 export default defineConfig(({ mode }) => {
   return {
@@ -29,15 +30,14 @@ export default defineConfig(({ mode }) => {
     plugins: [
       Vue({
         template: {
-          compilerOptions: {
-          }
+          compilerOptions: {}
         },
         include: [/\.vue$/],
       }),
       {
         config() {
           //! this one is a big decision
-          return { define: { __VUE_PROD_DEVTOOLS__: env.VITE_PRODUCTION_DEVTOOLS === 'true' } }
+          return { define: { __VUE_PROD_DEVTOOLS__: false } }
         },
       },
 
@@ -55,7 +55,6 @@ export default defineConfig(({ mode }) => {
         imports: [
           'vue',
           'vue-router',
-          '@vueuse/head',
           '@vueuse/core',
         ],
         dts: 'src/auto-imports.d.ts',
@@ -122,7 +121,6 @@ export default defineConfig(({ mode }) => {
         'vue',
         'vue-router',
         '@vueuse/core',
-        '@vueuse/head',
       ],
       exclude: [
         'vue-demi',

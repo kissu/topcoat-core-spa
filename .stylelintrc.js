@@ -1,4 +1,5 @@
 module.exports = {
+  //? this one is not really working in the CI
   plugins: ['stylelint-color-format', 'stylelint-prettier'],
   extends: [
     'stylelint-config-standard',

@@ -9,8 +9,9 @@ export default {
 </script>
 
 <template>
-  <nav class="text-xl mt-6">I am a footer</nav>
-  <button class="icon-btn mx-2 !outline-none" title="salut" @click="toggleDark">
+  <br />
+  <br />
+  <button class="icon-btn mx-2 !outline-none" @click="toggleDark">
     <button class="i-carbon-sun dark:i-carbon-moon" text="primary-300 dark:secondary-500"></button>
   </button>
 </template>
