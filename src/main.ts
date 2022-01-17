@@ -25,4 +25,5 @@ const router = createRouter({
   routes,
 })
 app.use(router)
+app.component('GlobalComponent', { render: () => h('div', 'this is a global component') })
 app.mount('#app')
