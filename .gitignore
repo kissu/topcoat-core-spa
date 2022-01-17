@@ -21,3 +21,6 @@ components.d.ts
 
 # used for rollup-plugin-visualizer
 stats.html
+
+# Local Netlify folder
+.netlify
