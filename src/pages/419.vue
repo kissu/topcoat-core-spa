@@ -13,7 +13,7 @@ export default {
       h(globalComponent),
       h(RenderImage),
       h(RenderFrameSlot, null, {
-        [dynamicNamedSlot]: () => h('p', { class: 'text-warning-400 font-bold' }),
+        [dynamicNamedSlot]: () => h('p', { class: 'text-warning-400 font-bold' }, 'custom text'),
         // default: () => h('p', 'test default'),
       }),
     ]
