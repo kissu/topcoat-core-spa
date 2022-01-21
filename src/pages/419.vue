@@ -1,5 +1,6 @@
 <script>
 import { h, resolveComponent } from 'vue'
+// import { users } from '~/utils/users'
 
 import RenderImage from '~/components/render/RenderImage.vue'
 import RenderFrameSlot from '~/components/render/RenderFrameSlot.vue'
@@ -12,10 +13,14 @@ export default {
     return () => [
       h(globalComponent),
       h(RenderImage),
-      h(RenderFrameSlot, null, {
-        [dynamicNamedSlot]: () => h('p', { class: 'text-warning-400 font-bold' }, 'custom text'),
-        // default: () => h('p', 'test default'),
-      }),
+      h(
+        RenderFrameSlot,
+        { divider: '4' },
+        {
+          [dynamicNamedSlot]: () => h('div', { class: 'text-warning-400 font-bold' }, 'custom here'),
+          // default: () => h('p', 'test default'),
+        },
+      ),
     ]
   },
 }

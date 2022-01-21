@@ -4,20 +4,28 @@ import { useFetch } from '@vueuse/core'
 
 export default {
   name: 'RenderFrameSlot',
-  async setup(_props, { slots }) {
+  props: {
+    divider: {
+      type: String,
+      default: '2',
+    },
+  },
+  async setup(props, { slots }) {
     const users = ref([])
     const { data } = await useFetch('https://jsonplaceholder.typicode.com/users').get().json()
     users.value = data.value
 
     return () => [
-      h('div', { class: 'yolo' }, [h(Fragment, null, slots.header?.() || 'default table header')]),
+      h('p', props.divider),
+      h('div', { class: 'yolo' }, [h('div', null, slots.header?.() || 'default table header')]),
+      // h('div', { class: 'yolo' }, [h(Fragment, null, slots.header?.() || 'default table header')]),
       h('div', { class: 'border-4 border-success-400' }, [
         h(
           'div',
           null,
           slots.default?.() ||
             users.value.map(({ id, name, email }) => {
-              if (id % 2 === 0) {
+              if (id % props.divider === 0) {
                 return h(
                   'p',
                   {
