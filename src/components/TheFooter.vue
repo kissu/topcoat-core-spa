@@ -9,6 +9,7 @@ export default {
 </script>
 
 <template>
+  <hr />
   <br />
   <br />
   <button class="icon-btn mx-2 !outline-none" @click="toggleDark">
