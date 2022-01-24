@@ -1,20 +1,10 @@
 <script>
-import { h, ref, createTextVNode } from 'vue'
-import { useFetch } from '@vueuse/core'
-import { isEmpty } from 'lodash-es'
+import { h, ref } from 'vue'
 import RenderIterateTemplate from '~/components/render/RenderIterateTemplate.vue'
-import { useListElementsStore } from '~/stores/listElements'
+import { recursiveParsing } from '~/composables/renderFunctions.ts'
 
 export default {
-  async setup() {
-    const listElementsStore = useListElementsStore()
-
-    const { data } = await useFetch('https://picsum.photos/v2/list?limit=10').get().json()
-    listElementsStore.$patch((state) => {
-      state.allListElements['xyz-images'] = data // unique ID here
-      state.hasChanged = true
-    })
-
+  setup() {
     const response = ref([
       {
         element: { entity: 'section', type: 'htmlTag' },
@@ -45,9 +35,11 @@ export default {
           { element: { entity: 'br', type: 'htmlTag' } },
           {
             element: { entity: 'p', type: 'htmlTag' },
-            props: null,
+            props: { onClick: () => console.log('regular click') },
             children: [
-              { element: { entity: 'We do have some ', type: 'rawText' } },
+              {
+                element: { entity: 'We do have some ', type: 'rawText' },
+              },
               {
                 element: { entity: 'span', type: 'htmlTag' },
                 props: { class: 'font-black text-error-400' },
@@ -67,14 +59,29 @@ export default {
                   elementNameId: 'xyz-images',
                   dataField: 'url',
                 },
-                props: { key: 'id' },
+                props: {
+                  key: 'id',
+                  hints: {
+                    elements: {
+                      ifConditional: {
+                        condition: '% 2 === 0',
+                        fieldToTest: 'id',
+                      },
+                      // onClick: {
+                      //   dataField: 'author',
+                      // },
+                    },
+                  },
+                },
                 children: [
                   {
                     element: { entity: 'span', type: 'htmlTag' },
                     props: { class: 'italic text-success-200' },
                     children: [{ element: { entity: 'images >> ', type: 'rawText' } }],
                   },
-                  { element: { entity: 'xyz-images', type: 'iteratedElement' } },
+                  {
+                    element: { entity: 'xyz-images', type: 'iteratedElement' },
+                  },
                 ],
               },
             ],
@@ -99,72 +106,6 @@ export default {
         ],
       },
     ])
-
-    //? helper functions
-    const returnTextNode = (object) => {
-      return createTextVNode(object.element.entity)
-    }
-
-    const returnNull = () => {
-      console.warn('empty object passed here')
-      return null
-    }
-
-    const iterateOnElements = (object) => {
-      return listElementsStore.allListElements[object?.element?.elementNameId].map((iteratedElement) => {
-        //* here we loop on Pinia's array like in a regular v-for
-        return h(
-          parseElement(object),
-          parseProps(object), //todo need to handle the :key here
-          iterativeParsing({ object, iteratedElement, dataField: object?.element?.dataField }),
-        )
-      })
-    }
-
-    //? parsers
-    const parseElement = (object) => {
-      return object.element.entity
-    }
-
-    const parseProps = (object) => {
-      if (!('props' in object)) return null
-      return object.props
-    }
-
-    const parseChildren = (object) => {
-      if (!('children' in object)) return []
-
-      return object.children.map((child) => {
-        return recursiveParsing(child)
-      })
-    }
-
-    const iterativeParsing = ({ object, iteratedElement, dataField }) => {
-      if (!('children' in object)) return []
-
-      return object.children.map((child) => {
-        if (child?.element?.type === 'iteratedElement') {
-          return h(createTextVNode(iteratedElement[dataField]))
-        }
-        return recursiveParsing(child)
-      })
-    }
-
-    //? main
-    const recursiveParsing = (object) => {
-      //* leaf, no need to dig deeper
-      if (object?.element?.type === 'rawText') {
-        return returnTextNode(object)
-      } else if (object?.element?.type === 'iterativeList') {
-        return iterateOnElements(object)
-      } else if (isEmpty(object)) {
-        //* if not an object, return nothing
-        return returnNull()
-      } else {
-        //* look for element + props + children, most common use-case with an htmlTag
-        return h(parseElement(object), parseProps(object), parseChildren(object))
-      }
-    }
 
     //? render view
     return () => [h(RenderIterateTemplate), h('hr'), response.value.map((obj) => recursiveParsing(obj))]
