@@ -43,8 +43,8 @@ export default {
           }),
         ),
       ]),
-      h('div', null, 'okay'),
-      h('p', null, ["I'm deeply ", h('span', null, 'nested')]),
+      h('div', null, 'i am at root level'),
+      h('p', null, ['same here ', h('span', null, 'nested')]),
     ]
   },
 }

@@ -11,7 +11,7 @@ export default {
       h('p', { class: 'text-successuy-700 font-bold' }, 'Interesting piece of image'),
     ])
 
-    return () => [h(wrappingDiv, {}, [title, section])]
+    return () => [h(wrappingDiv, null, [title, section])]
   },
 }
 </script>

@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import { createRouter, createWebHistory } from 'vue-router'
 import generatedRoutes from 'virtual:generated-pages'
 import { setupLayouts } from 'virtual:generated-layouts'
@@ -18,6 +19,7 @@ import 'virtual:windi-devtools'
 import 'uno.css'
 
 const routes = setupLayouts(generatedRoutes)
+const pinia = createPinia()
 
 const app = createApp(App)
 const router = createRouter({
@@ -25,5 +27,6 @@ const router = createRouter({
   routes,
 })
 app.use(router)
+app.use(pinia)
 app.component('GlobalComponent', { render: () => h('div', 'this is a global component') })
 app.mount('#app')
