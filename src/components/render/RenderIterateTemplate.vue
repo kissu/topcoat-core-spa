@@ -22,7 +22,7 @@ export default {
         ]),
         h('br', null),
         h('br', null),
-        h('p', null, [
+        h('p', { onClick: () => console.log('regular click') }, [
           'We do have some ',
           h('span', { class: 'font-black text-error-400' }, 'fancy users'),
           ' below',
@@ -31,15 +31,17 @@ export default {
           'ul',
           null,
           users.value.map((user) => {
-            return [
-              h(
-                'li',
-                {
-                  key: user.id,
-                },
-                [h('span', { class: 'italic text-success-200' }, 'user >> '), user.email],
-              ),
-            ]
+            if (user.id % 2 === 0) {
+              return [
+                h(
+                  'li',
+                  {
+                    key: user.id,
+                  },
+                  [h('span', { class: 'italic text-success-200' }, 'user >> '), user.email],
+                ),
+              ]
+            }
           }),
         ),
       ]),
